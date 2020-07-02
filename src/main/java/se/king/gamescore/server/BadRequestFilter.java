@@ -1,4 +1,4 @@
-package se.king.gamescore.http;
+package se.king.gamescore.server;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -6,10 +6,15 @@ import java.net.URISyntaxException;
 import com.sun.net.httpserver.Filter;
 import com.sun.net.httpserver.HttpExchange;
 
-import se.king.gamescore.config.Configs;
 import se.king.gamescore.enums.HttpCodes;
 import se.king.gamescore.util.RequestHelper;
 
+/**
+ * Filters out the request what are not available for this server
+ *
+ * @author  Sándor Németh
+ * @date    01.07.2020
+ */
 public class BadRequestFilter extends Filter
 {
     @Override
@@ -36,6 +41,6 @@ public class BadRequestFilter extends Filter
     @Override
     public String description()
     {
-        return "Filter the bad requests";
+        return "Only available requests can be processed by this server";
     }
 }

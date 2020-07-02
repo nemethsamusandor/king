@@ -4,9 +4,8 @@ package se.king.gamescore.config;
  * GameScore app configurations
  * This should be replaced in live environment with resources
  *
- * @author Sándor Németh
- *
- * @date 01.07.2020
+ * @author  Sándor Németh
+ * @date    01.07.2020
  */
 public enum Configs
 {

@@ -1,5 +1,11 @@
 package se.king.gamescore.enums;
 
+/**
+ * Available request types
+ *
+ * @author  Sándor Németh
+ * @date    01.07.2020
+ */
 public enum URIEnum
 {
     LOGIN("login"),

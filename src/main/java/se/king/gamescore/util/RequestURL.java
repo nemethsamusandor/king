@@ -17,8 +17,8 @@ import java.util.stream.Collectors;
 /**
  * Request URI parser
  *
- * @author Sándor Németh
- * @date 01.07.2020
+ * @author  Sándor Németh
+ * @date    01.07.2020
  */
 public class RequestURL
 {
@@ -37,11 +37,6 @@ public class RequestURL
     public List<String> getPathList()
     {
         return pathList;
-    }
-
-    public void setPathList(List<String> pathList)
-    {
-        this.pathList = pathList;
     }
 
     public List<String> getQueryParameters(String key)

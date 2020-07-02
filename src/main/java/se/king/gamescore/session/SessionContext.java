@@ -13,8 +13,8 @@ import se.king.gamescore.enums.SessionEnums;
 /**
  * Create and manage sessions
  *
- * @author Sándor Németh
- * @date 01.07.2020
+ * @author  Sándor Németh
+ * @date    01.07.2020
  */
 public class SessionContext
 {

@@ -6,8 +6,19 @@ import java.util.Arrays;
 
 import se.king.gamescore.enums.URIEnum;
 
+/**
+ * Helper class for request processing and validating
+ *
+ * @author  Sándor Németh
+ * @date    01.07.2020
+ */
 public class RequestHelper
 {
+    // Hide public constructor
+    private RequestHelper()
+    {
+    }
+
     public static boolean isImplemented(String requestUri) throws URISyntaxException
     {
         RequestURL requestURL = getRequestUrl(requestUri);
@@ -27,24 +38,17 @@ public class RequestHelper
         return new RequestURL(uri);
     }
 
-    public static boolean isInteger(String value, int radix) {
-        if (value.isEmpty())
+    public static boolean isInteger(String value)
+    {
+        try
+        {
+            int number = Integer.parseInt(value);
+
+            return number >= 0;
+        }
+        catch (NumberFormatException e)
         {
             return false;
         }
-
-        for (int i = 0; i < value.length(); i++)
-        {
-            if (i == 0 && value.charAt(i) == '-')
-            {
-                if(value.length() == 1)
-                    return false;
-                else
-                    continue;
-            }
-            if (Character.digit(value.charAt(i), radix) < 0)
-                return false;
-        }
-        return true;
     }
 }

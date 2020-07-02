@@ -14,8 +14,8 @@ import se.king.gamescore.enums.URIEnum;
 /**
  * Handling Login request
  *
- * @author Sándor Németh
- * @date 01.07.2020
+ * @author  Sándor Németh
+ * @date    01.07.2020
  */
 public class LoginRequestHandler implements RequestHandler
 {

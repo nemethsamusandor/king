@@ -1,5 +1,11 @@
 package se.king.gamescore.enums;
 
+/**
+ * HTTP response codes
+ *
+ * @author  Sándor Németh
+ * @date    01.07.2020
+ */
 public enum HttpCodes
 {
     OK(200),
