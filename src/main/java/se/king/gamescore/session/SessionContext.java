@@ -73,8 +73,8 @@ public class SessionContext
         else
         {
             httpSession = new HttpSession();
-            httpSession.addAttribute(SessionEnums.SESSION_KEY.getValue(), makeSessionKey());
-            httpSession.addAttribute(SessionEnums.USER_ID.getValue(), userId);
+            httpSession.addAttribute(SessionEnums.SESSION_KEY, makeSessionKey());
+            httpSession.addAttribute(SessionEnums.USER_ID, userId);
             sessionMap.putIfAbsent(userId, httpSession);
         }
 
@@ -89,7 +89,7 @@ public class SessionContext
     public HttpSession getHttpSessionBySessionKey(String sessionKey)
     {
         HttpSession httpSession = sessionMap.entrySet().stream()
-            .filter(h -> h.getValue().getAttribute(SessionEnums.SESSION_KEY.getValue()).equals(sessionKey))
+            .filter(h -> h.getValue().getAttribute(SessionEnums.SESSION_KEY).equals(sessionKey))
             .map(Map.Entry::getValue)
             .findFirst()
             .orElse(null);
@@ -97,7 +97,7 @@ public class SessionContext
         if (httpSession != null)
         {
             // Keep session live
-            int userId = (Integer) httpSession.getAttribute(SessionEnums.USER_ID.getValue());
+            int userId = (Integer) httpSession.getAttribute(SessionEnums.USER_ID);
             httpSession.setLastVisitTime(new Date());
             sessionMap.replace(userId, httpSession);
         }

@@ -34,7 +34,7 @@ public class LoginRequestHandler implements RequestHandler
         LOG.log(Level.INFO, () -> URIEnum.LOGIN.name() + " service called with user id: " + userId);
 
         String sessionKey = (String) SessionContext.getInstance()
-            .getHttpSessionByUserId(userId).getAttribute(SessionEnums.SESSION_KEY.getValue());
+            .getHttpSessionByUserId(userId).getAttribute(SessionEnums.SESSION_KEY);
 
         exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, sessionKey.length());
         exchange.getResponseBody().write(sessionKey.getBytes());

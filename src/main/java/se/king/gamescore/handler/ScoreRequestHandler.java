@@ -51,7 +51,7 @@ public class ScoreRequestHandler implements RequestHandler
 
             if (httpSession != null && score >= 0)
             {
-                int userId = (Integer) httpSession.getAttribute(SessionEnums.USER_ID.getValue());
+                int userId = (Integer) httpSession.getAttribute(SessionEnums.USER_ID);
 
                 ScoreContext.getInstance().addScore(levelId, userId, score);
 

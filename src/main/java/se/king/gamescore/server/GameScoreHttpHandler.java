@@ -47,7 +47,7 @@ public class GameScoreHttpHandler implements HttpHandler
                         requestHandler = new LoginRequestHandler(id);
                     }
                     else if (URIEnum.SCORE.getService().equals(actualService)
-                        && SessionEnums.SESSION_KEY.getValue().equals(requestURL.getQueryKey()))
+                        && SessionEnums.SESSION_KEY.equals(requestURL.getQueryKey()))
                     {
                         requestHandler = new ScoreRequestHandler(id, requestURL.getQueryValue());
                     }

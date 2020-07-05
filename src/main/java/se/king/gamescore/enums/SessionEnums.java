@@ -6,20 +6,8 @@ package se.king.gamescore.enums;
  * @author  Sándor Németh
  * @date    01.07.2020
  */
-public enum SessionEnums
+public class SessionEnums
 {
-    SESSION_KEY("sessionkey"),
-    USER_ID("userid");
-
-    private final String value;
-
-    SessionEnums(String value)
-    {
-        this.value = value;
-    }
-
-    public String getValue()
-    {
-        return value;
-    }
+    public static final String SESSION_KEY = "sessionkey";
+    public static final String USER_ID = "userid";
 }
