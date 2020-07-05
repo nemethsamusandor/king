@@ -26,12 +26,12 @@ public class HttpSession
         return map.get(name);
     }
 
-    synchronized Date getLastVisitTime()
+    public synchronized Date getLastVisitTime()
     {
         return lastVisitTime;
     }
 
-    synchronized void setLastVisitTime(Date lastVisitTime)
+    public synchronized void setLastVisitTime(Date lastVisitTime)
     {
         this.lastVisitTime = lastVisitTime;
     }

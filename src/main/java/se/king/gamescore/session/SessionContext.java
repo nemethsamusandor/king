@@ -29,8 +29,8 @@ public class SessionContext
     {
         this.sessionMap = new ConcurrentHashMap<>();
         Timer timer = new Timer(true);
-        timer.scheduleAtFixedRate(new GameScoreTimerTask(), Configs.SESSION_TIMER_DELAY.getLongValue(),
-            Configs.SESSION_TIMER_PERIOD.getLongValue());
+        timer.scheduleAtFixedRate(new GameScoreTimerTask(), Configs.SESSION_TIMER_DELAY,
+            Configs.SESSION_TIMER_PERIOD);
     }
 
     /**
@@ -58,7 +58,7 @@ public class SessionContext
 
     /**
      * Create or update a HttpSession
-     * @param userId identify the session - 32 bit unsigned int
+     * @param userId identify the session - 31 bit unsigned int
      * @return {@link HttpSession} HttpSession object
      */
     public HttpSession getHttpSessionByUserId(int userId)
@@ -105,17 +105,15 @@ public class SessionContext
         return httpSession;
     }
 
-
-
     /**
      * Removes the httpSessions that are expired
      */
-    void removeHttpSessions()
+    public void removeHttpSessions()
     {
         final Date now = new Date();
 
         sessionMap.forEach((key, httpSession) -> {
-            if (now.getTime() - httpSession.getLastVisitTime().getTime() > Configs.SESSION_TIMEOUT.getLongValue())
+            if (now.getTime() - httpSession.getLastVisitTime().getTime() > Configs.SESSION_TIMEOUT)
             {
                 sessionMap.remove(key);
             }

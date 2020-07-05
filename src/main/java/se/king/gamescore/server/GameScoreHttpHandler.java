@@ -1,7 +1,6 @@
 package se.king.gamescore.server;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,7 +13,7 @@ import se.king.gamescore.handler.LoginRequestHandler;
 import se.king.gamescore.handler.RequestHandler;
 import se.king.gamescore.handler.ScoreRequestHandler;
 import se.king.gamescore.util.RequestHelper;
-import se.king.gamescore.util.RequestURL;
+import se.king.gamescore.dto.RequestURL;
 import se.king.gamescore.enums.URIEnum;
 
 /**
@@ -32,41 +31,47 @@ public class GameScoreHttpHandler implements HttpHandler
     {
         try
         {
-            String requestUri = exchange.getRequestURI().toString();
+            RequestURL requestURL = RequestHelper.getRequestURL(exchange.getRequestURI().toString());
 
-            RequestURL requestURL = RequestHelper.getRequestUrl(requestUri);
-
-            //For the current specification the first element of the path is always some king of id
-            String ids = requestURL.getPathList().get(0);
-
-            int id = RequestHelper.isInteger(ids) ? Integer.parseInt(ids) : -1;
-            String actualService = requestURL.getPathList().get(1);
-
-            if (id > 0)
+            if (requestURL != null)
             {
-                RequestHandler requestHandler = null;
+                int id = requestURL.getId();
+                String actualService = requestURL.getService();
 
-                if (URIEnum.LOGIN.getService().equals(actualService))
+                if (id >= 0)
                 {
-                    requestHandler = new LoginRequestHandler(id);
-                }
-                else if (URIEnum.SCORE.getService().equals(actualService))
-                {
-                    requestHandler = new ScoreRequestHandler(id,
-                        requestURL.getQueryParameters(SessionEnums.SESSION_KEY.getValue()));
-                }
-                else if (URIEnum.HIGH_SCORE_LIST.getService().equals(actualService))
-                {
-                    requestHandler = new HighScoreRequestHandler(id);
-                }
+                    RequestHandler requestHandler = null;
 
-                if (requestHandler != null)
+                    if (URIEnum.LOGIN.getService().equals(actualService))
+                    {
+                        requestHandler = new LoginRequestHandler(id);
+                    }
+                    else if (URIEnum.SCORE.getService().equals(actualService)
+                        && SessionEnums.SESSION_KEY.getValue().equals(requestURL.getQueryKey()))
+                    {
+                        requestHandler = new ScoreRequestHandler(id, requestURL.getQueryValue());
+                    }
+                    else if (URIEnum.HIGH_SCORE_LIST.getService().equals(actualService))
+                    {
+                        requestHandler = new HighScoreRequestHandler(id);
+                    }
+
+                    if (requestHandler != null)
+                    {
+                        requestHandler.handleResponse(exchange);
+                    }
+                }
+                else
                 {
-                    requestHandler.handleResponse(exchange);
+                    LOG.log(Level.WARNING, "id is not valid!");
                 }
             }
+            else
+            {
+                LOG.log(Level.WARNING, "Request is not valid!");
+            }
         }
-        catch (NumberFormatException | URISyntaxException e)
+        catch (NumberFormatException e)
         {
             LOG.log(Level.SEVERE, () -> "Technical failure: " + e.getMessage());
         }

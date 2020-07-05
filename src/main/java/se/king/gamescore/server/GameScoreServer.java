@@ -31,13 +31,13 @@ public class GameScoreServer
     {
         // Setup the server server
         server = HttpServer.create(
-            new InetSocketAddress(BASE_URI.getValue(), SERVER_PORT.getIntValue()), BACK_LOGGING.getIntValue());
+            new InetSocketAddress(BASE_URI, SERVER_PORT), BACK_LOGGING);
         HttpContext context = server.createContext("/", new GameScoreHttpHandler());
 
         context.getFilters().add(new BadRequestFilter());
 
         //Thread pool executor for multi threading
-        server.setExecutor(Executors.newFixedThreadPool(THREAD_POOL_COUNT.getIntValue()));
+        server.setExecutor(Executors.newFixedThreadPool(THREAD_POOL_COUNT));
     }
 
     public void start()

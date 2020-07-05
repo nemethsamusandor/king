@@ -4,13 +4,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.List;
+import java.net.HttpURLConnection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.sun.net.httpserver.HttpExchange;
 
-import se.king.gamescore.enums.HttpCodes;
 import se.king.gamescore.enums.SessionEnums;
 import se.king.gamescore.enums.URIEnum;
 import se.king.gamescore.repository.ScoreContext;
@@ -29,12 +28,12 @@ public class ScoreRequestHandler implements RequestHandler
     private static final Logger LOG = Logger.getLogger("gameScoreLogger");
 
     private final int levelId;
-    private final List<String> sessionKeyParams;
+    private final String sessionKey;
 
-    public ScoreRequestHandler(int levelId, List<String> sessionKeyParams)
+    public ScoreRequestHandler(int levelId, String sessionKey)
     {
         this.levelId = levelId;
-        this.sessionKeyParams = sessionKeyParams;
+        this.sessionKey = sessionKey;
     }
 
     @Override
@@ -42,15 +41,13 @@ public class ScoreRequestHandler implements RequestHandler
     {
         LOG.log(Level.INFO, () -> URIEnum.SCORE.name() + " service called with levelId: " + levelId);
 
-        if (sessionKeyParams != null && !sessionKeyParams.isEmpty())
+        if (sessionKey != null)
         {
             // Get first value of the sessionKey param
-            String sessionKey = sessionKeyParams.get(0);
-            LOG.log(Level.INFO, () -> "\n" + URIEnum.SCORE.name() + " service session key: " + sessionKey);
+            LOG.log(Level.INFO, () -> URIEnum.SCORE.name() + " service session key: " + sessionKey);
 
             HttpSession httpSession = SessionContext.getInstance().getHttpSessionBySessionKey(sessionKey);
             int score = getScore(exchange);
-
 
             if (httpSession != null && score >= 0)
             {
@@ -58,25 +55,24 @@ public class ScoreRequestHandler implements RequestHandler
 
                 ScoreContext.getInstance().addScore(levelId, userId, score);
 
-                exchange.sendResponseHeaders(HttpCodes.OK.getCode(), 0);
+                exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
             }
             else
             {
-                LOG.log(Level.WARNING, () -> "\n" + URIEnum.SCORE.name() + " - session does not exist or score is not valid!");
+                LOG.log(Level.WARNING, () -> URIEnum.SCORE.name() + " - session does not exist or score is not valid!");
                 sendBadRequest(exchange);
             }
         }
         else
         {
-            LOG.log(Level.WARNING, () -> "\n" + URIEnum.SCORE.name() + " - sessionKey not set in query parameter!");
+            LOG.log(Level.WARNING, () -> URIEnum.SCORE.name() + " - sessionKey not set in query parameter!");
             sendBadRequest(exchange);
         }
-
     }
 
     private void sendBadRequest(HttpExchange exchange) throws IOException
     {
-        exchange.sendResponseHeaders(HttpCodes.BAD_REQUEST.getCode(), -1);
+        exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, -1);
     }
 
     private int getScore(HttpExchange exchange) throws IOException

@@ -72,7 +72,7 @@ public class ScoreContext
             return levelMap.entrySet().stream()
                 .sorted(Map.Entry.<Integer, Integer>comparingByValue().reversed())
                 .map(s -> s.getValue() + "=" + s.getKey())
-                .limit(Configs.HIGH_SCORE_LIMIT.getIntValue())
+                .limit(Configs.HIGH_SCORE_LIMIT)
                 .collect(Collectors.joining(","));
         }
 
