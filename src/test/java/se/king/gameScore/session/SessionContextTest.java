@@ -6,7 +6,7 @@ import java.util.Calendar;
 
 import org.junit.jupiter.api.Test;
 
-import se.king.gamescore.enums.SessionEnums;
+import se.king.gamescore.enums.SessionConstants;
 import se.king.gamescore.session.HttpSession;
 import se.king.gamescore.session.SessionContext;
 
@@ -31,15 +31,15 @@ class SessionContextTest
         // User 1 session
         HttpSession session1 = SessionContext.getInstance().getHttpSessionByUserId(1);
 
-        assertNotNull(session1.getAttribute(SessionEnums.SESSION_KEY));
-        assertNotEquals("", session1.getAttribute(SessionEnums.SESSION_KEY));
-        assertEquals(1, session1.getAttribute(SessionEnums.USER_ID));
+        assertNotNull(session1.getAttribute(SessionConstants.SESSION_KEY));
+        assertNotEquals("", session1.getAttribute(SessionConstants.SESSION_KEY));
+        assertEquals(1, session1.getAttribute(SessionConstants.USER_ID));
 
         // User 2 session
         HttpSession session2 = SessionContext.getInstance().getHttpSessionByUserId(2);
 
-        assertNotEquals(session1.getAttribute(SessionEnums.SESSION_KEY),
-            session2.getAttribute(SessionEnums.SESSION_KEY));
+        assertNotEquals(session1.getAttribute(SessionConstants.SESSION_KEY),
+            session2.getAttribute(SessionConstants.SESSION_KEY));
     }
 
     @Test
@@ -50,7 +50,7 @@ class SessionContextTest
         HttpSession session1 = SessionContext.getInstance().getHttpSessionByUserId(2);
 
         HttpSession session2 = SessionContext.getInstance().getHttpSessionBySessionKey(
-            (String) session.getAttribute(SessionEnums.SESSION_KEY));
+            (String) session.getAttribute(SessionConstants.SESSION_KEY));
 
         HttpSession session3 = SessionContext.getInstance().getHttpSessionBySessionKey("NOT_VALID_SESSION");
 
@@ -63,7 +63,7 @@ class SessionContextTest
     void removeHttpSessions()
     {
         HttpSession session = SessionContext.getInstance().getHttpSessionByUserId(10);
-        String sessionKey = (String) session.getAttribute(SessionEnums.SESSION_KEY);
+        String sessionKey = (String) session.getAttribute(SessionConstants.SESSION_KEY);
 
         // Remove invalid sessions
         SessionContext.getInstance().removeHttpSessions();

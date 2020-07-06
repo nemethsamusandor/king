@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 
 import com.sun.net.httpserver.HttpExchange;
 
-import se.king.gamescore.enums.SessionEnums;
+import se.king.gamescore.enums.SessionConstants;
 import se.king.gamescore.session.SessionContext;
 import se.king.gamescore.enums.URIEnum;
 
@@ -34,7 +34,7 @@ public class LoginRequestHandler implements RequestHandler
         LOG.log(Level.INFO, () -> URIEnum.LOGIN.name() + " service called with user id: " + userId);
 
         String sessionKey = (String) SessionContext.getInstance()
-            .getHttpSessionByUserId(userId).getAttribute(SessionEnums.SESSION_KEY);
+            .getHttpSessionByUserId(userId).getAttribute(SessionConstants.SESSION_KEY);
 
         exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, sessionKey.length());
         exchange.getResponseBody().write(sessionKey.getBytes());

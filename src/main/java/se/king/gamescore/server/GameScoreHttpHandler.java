@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
-import se.king.gamescore.enums.SessionEnums;
+import se.king.gamescore.enums.SessionConstants;
 import se.king.gamescore.handler.HighScoreRequestHandler;
 import se.king.gamescore.handler.LoginRequestHandler;
 import se.king.gamescore.handler.RequestHandler;
@@ -47,7 +47,7 @@ public class GameScoreHttpHandler implements HttpHandler
                         requestHandler = new LoginRequestHandler(id);
                     }
                     else if (URIEnum.SCORE.getService().equals(actualService)
-                        && SessionEnums.SESSION_KEY.equals(requestURL.getQueryKey()))
+                        && SessionConstants.SESSION_KEY.equals(requestURL.getQueryKey()))
                     {
                         requestHandler = new ScoreRequestHandler(id, requestURL.getQueryValue());
                     }

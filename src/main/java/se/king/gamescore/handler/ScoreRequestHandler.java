@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 
 import com.sun.net.httpserver.HttpExchange;
 
-import se.king.gamescore.enums.SessionEnums;
+import se.king.gamescore.enums.SessionConstants;
 import se.king.gamescore.enums.URIEnum;
 import se.king.gamescore.repository.ScoreContext;
 import se.king.gamescore.session.HttpSession;
@@ -51,7 +51,7 @@ public class ScoreRequestHandler implements RequestHandler
 
             if (httpSession != null && score >= 0)
             {
-                int userId = (Integer) httpSession.getAttribute(SessionEnums.USER_ID);
+                int userId = (Integer) httpSession.getAttribute(SessionConstants.USER_ID);
 
                 ScoreContext.getInstance().addScore(levelId, userId, score);
 

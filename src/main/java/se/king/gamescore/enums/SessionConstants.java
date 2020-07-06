@@ -6,8 +6,13 @@ package se.king.gamescore.enums;
  * @author  Sándor Németh
  * @date    01.07.2020
  */
-public class SessionEnums
+public class SessionConstants
 {
     public static final String SESSION_KEY = "sessionkey";
     public static final String USER_ID = "userid";
+
+    private SessionConstants()
+    {
+
+    }
 }
