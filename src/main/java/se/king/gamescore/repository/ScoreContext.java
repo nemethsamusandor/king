@@ -5,13 +5,13 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.stream.Collectors;
 
-import se.king.gamescore.config.Configs;
+import se.king.gamescore.config.ApplicationConfig;
 
 /**
  * Create and manage scores
  *
- * @author Sándor Németh
- * @date 01.07.2020
+ * @author  Sándor Németh
+ * @date    01.07.2020
  */
 public class ScoreContext
 {
@@ -72,7 +72,7 @@ public class ScoreContext
             return levelMap.entrySet().stream()
                 .sorted(Map.Entry.<Integer, Integer>comparingByValue().reversed())
                 .map(s -> s.getValue() + "=" + s.getKey())
-                .limit(Configs.HIGH_SCORE_LIMIT)
+                .limit(ApplicationConfig.HIGH_SCORE_LIMIT)
                 .collect(Collectors.joining(","));
         }
 

@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.concurrent.ConcurrentHashMap;
 
-import se.king.gamescore.config.Configs;
+import se.king.gamescore.config.ApplicationConfig;
 import se.king.gamescore.enums.SessionEnums;
 
 /**
@@ -29,8 +29,8 @@ public class SessionContext
     {
         this.sessionMap = new ConcurrentHashMap<>();
         Timer timer = new Timer(true);
-        timer.scheduleAtFixedRate(new GameScoreTimerTask(), Configs.SESSION_TIMER_DELAY,
-            Configs.SESSION_TIMER_PERIOD);
+        timer.scheduleAtFixedRate(new GameScoreTimerTask(), ApplicationConfig.SESSION_TIMER_DELAY,
+            ApplicationConfig.SESSION_TIMER_PERIOD);
     }
 
     /**
@@ -113,7 +113,7 @@ public class SessionContext
         final Date now = new Date();
 
         sessionMap.forEach((key, httpSession) -> {
-            if (now.getTime() - httpSession.getLastVisitTime().getTime() > Configs.SESSION_TIMEOUT)
+            if (now.getTime() - httpSession.getLastVisitTime().getTime() > ApplicationConfig.SESSION_TIMEOUT)
             {
                 sessionMap.remove(key);
             }

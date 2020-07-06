@@ -1,9 +1,9 @@
 package se.king.gamescore.server;
 
-import static se.king.gamescore.config.Configs.BACK_LOGGING;
-import static se.king.gamescore.config.Configs.BASE_URI;
-import static se.king.gamescore.config.Configs.SERVER_PORT;
-import static se.king.gamescore.config.Configs.THREAD_POOL_COUNT;
+import static se.king.gamescore.config.ApplicationConfig.BACK_LOGGING;
+import static se.king.gamescore.config.ApplicationConfig.BASE_URI;
+import static se.king.gamescore.config.ApplicationConfig.SERVER_PORT;
+import static se.king.gamescore.config.ApplicationConfig.THREAD_POOL_COUNT;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
